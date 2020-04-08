@@ -64,9 +64,20 @@ ROBOTSTXT_OBEY = False
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    'filthyarchive.pipelines.FilthyarchivePipeline': 300,
-#}
+ITEM_PIPELINES = {
+   'filthyarchive.pipelines.FilthyarchivePipeline': 300,
+   'filthyarchive.pipelines.ImageNamePipeline': 100,
+   # 'scrapy.pipelines.images.ImagesPipeline': 1
+}
+
+IMAGES_STORE = 'ImgStore'
+
+# thumbs property names and sizes are arbitrary. Aspect ratios preserved
+IMAGES_THUMBS = {
+   # 'med': (260, 260),
+}
+
+# IMAGES_EXPIRES = 30 # Days. Default = 90
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html

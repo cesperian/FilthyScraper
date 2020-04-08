@@ -9,6 +9,11 @@ import scrapy
 
 
 class FilthyarchiveItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
+    title = scrapy.Field()
+    content = scrapy.Field()
+    rating = scrapy.Field()
+    genre = scrapy.Field()
+    year = scrapy.Field()
+    image_urls = scrapy.Field()
+    images = scrapy.Field()
+    image_names = scrapy.Field()
