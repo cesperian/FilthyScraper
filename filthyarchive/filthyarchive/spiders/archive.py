@@ -6,7 +6,8 @@ class ArchiveSpider(scrapy.Spider):
     name = 'getarchive'
     # allowed_domains = ['http://www.millbankusa.com/filthycritic/recent-shit']
 
-    # reviews pp set by form post. Also takes qs use for now. Mod'd py for changing dropdown at bottom
+    # reviews pp set by form post. Also takes qs, so use for now
+    # Mod'd py for changing dropdown in snippets.txt
     start_urls = ['http://www.millbankusa.com/filthycritic/recent-shit']
     # start_urls = ['http://www.millbankusa.com/filthycritic/recent-shit?limit=0']
 
@@ -23,32 +24,41 @@ class ArchiveSpider(scrapy.Spider):
         return prettyName
 
     def parse(self, response):
-        target = response.css("td a::attr(href)").get()
+        targets = response.css("td a::attr(href)").getall()
         # yield {'res': str(testEl.len())}
-        if target is not None:
-            yield response.follow(target, callback=self.procRev)
+        if targets is not None:
+            targets = targets[0:4]
+            for target in targets:
+                yield response.follow(target, callback=self.procRev)
 
     def procRev(self, response):
         review = FilthyarchiveItem()
 
         review['title'] = response.css("h1.title::text").get()
-        review['rating'] = response.css(".tag-list0 .label-info::text").get().strip().split(' ')[0]
-        review['genre'] = response.css(".tag-list1 .label-info::text").get().strip()
-        review['year'] = response.css(".tag-list2 .label-info::text").get().strip()
+
+        keywords = response.css(".tags li")
+        review['rating'] = keywords.css("a[href$='fingers']::text").get().strip().split(' ')[0]
+        review['year'] = keywords.css("a[href*='tags/tag']::text").get().strip()
+        genres = keywords.css("a:not([href*='tags/tag'])::text, a:not([href$='fingers'])::text").getall()
+        review['genre'] = ''
+        for g in genres:
+            gArr = []
+            gArr.append(g.strip())
+            review['genre'] = "&".join(gArr)
 
         # movie screenshots...
         imgUrls = response.css("p+ p img::attr(src)").getall()
-
-        review['image_names'] = self.procNames(imgUrls)
+        imgNames = self.procNames(imgUrls)
+        review['image_names'] = "&".join(imgNames)
         review['image_urls'] = self.relToAbs(imgUrls, response)
 
         # todo; ::text excludes nested <strong>'s. Find a way to 'flatten'
         # review['content'] = response.css("div.content > *::text").getall()
 
-        review['content'] = []
+        review['content'] = ''
         content = response.css("div.content > *").getall()
         for children in content:
             frag = children.partition('<img')
-            review['content'].append(frag[0] + frag[2].partition('>')[2])
+            review['content'] += (frag[0] + frag[2].partition('>')[2])
 
         yield review
