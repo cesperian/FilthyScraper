@@ -21,29 +21,56 @@ class FilthyarchivePipeline(object):
 
     def createTable(self):
         self.cursor.execute("""drop table if exists reviews""")
+        self.cursor.execute("""drop table if exists genres""")
+        self.cursor.execute("""drop table if exists images""")
         self.cursor.execute("""
             create table reviews(
                 title text,
+                blurb text,
                 content text,
                 year integer,
                 rating integer,
-                genre text,
-                imagenames text
+                imagenames,
+                genres
             )
         """)
+        # revisit this if setting up table rels..
+        # self.cursor.execute("""
+        #     create table genres(
+        #         genre text
+        #     )
+        # """)
+        # self.cursor.execute("""
+        #     create table images(
+        #         filename text
+        #     )
+        # """)
 
     def process_item(self, item, spider):
         self.cursor.execute(
-            """insert into reviews values (?,?,?,?,?,?)""",
+            """insert into reviews values (?,?,?,?,?,?,?)""",
             (
                 item['title'],
+                None,
                 item['content'],
                 item['year'],
                 item['rating'],
-                item['genre'],
-                item['image_names']
+                ','.join(item['image_names']),
+                ','.join(item['genres'])
             )
         )
+        # revisit this if setting up table rels..
+        # for g in item['genres']:
+        #     self.cursor.execute(
+        #         """insert into genres values (?)""", (g,)
+        #     )
+        #
+        # if item['image_names']:
+        #     for i in item['image_names']:
+        #         self.cursor.execute(
+        #             """insert into images values (?)""", (i,)
+        #         )
+
         self.conn.commit()
         return item
 

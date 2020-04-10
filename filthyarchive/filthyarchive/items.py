@@ -12,7 +12,7 @@ class FilthyarchiveItem(scrapy.Item):
     title = scrapy.Field()
     content = scrapy.Field()
     rating = scrapy.Field()
-    genre = scrapy.Field()
+    genres = scrapy.Field()
     year = scrapy.Field()
     image_urls = scrapy.Field()
     images = scrapy.Field()

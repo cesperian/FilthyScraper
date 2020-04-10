@@ -1,5 +1,8 @@
 
-modify keywords path for >1 genre
+-modify keywords path for >1 genre
 create 1:* rel, table for genre (or test using like)
-debug; reviews by jimmy
+-strip all html attributes from content
+-replace quotes w charcodes
+-debug; reviews by jimmy
+
 scrape http://www.bigempire.com/filthy/archive.html for 'landing' blurb, content blurb. update reviews table
