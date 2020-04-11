@@ -10,7 +10,7 @@ class BlurbsSpider(scrapy.Spider):
     def parse(self, response):
         rows = response.xpath("//table//table//tr")
         blurbObj = BlurbItem()
-        for r in rows[118:125]:
+        for r in rows:
             title = r.xpath(".//a//text()").get()
             blurb = r.xpath(".//td[last()-1]//text()").get()
             if (title is not None) and (blurb is not None):
@@ -18,5 +18,5 @@ class BlurbsSpider(scrapy.Spider):
                 blurb = blurb.replace('\n','').strip()
                 blurbObj['title'] = ' '.join(title.split())
                 blurbObj['blurb'] = ' '.join(blurb.split())
-                print(blurbObj)
+                # print(blurbObj)
                 yield blurbObj
