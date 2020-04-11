@@ -7,6 +7,9 @@
 
 import scrapy
 
+class BlurbItem(scrapy.Item):
+    title = scrapy.Field()
+    blurb = scrapy.Field()
 
 class FilthyarchiveItem(scrapy.Item):
     title = scrapy.Field()

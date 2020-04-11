@@ -8,9 +8,9 @@ class ArchiveSpider(scrapy.Spider):
 
     # reviews pp set by form post. Also takes qs, so use for now
     # Mod'd py for changing dropdown in snippets.txt
-    start_urls = ['http://www.millbankusa.com/filthycritic/recent-shit?limit=0']
+    # start_urls = ['http://www.millbankusa.com/filthycritic/recent-shit?limit=0']
     # start_urls = ['http://www.millbankusa.com/filthycritic/recent-shit']
-    # start_urls = ['http://www.millbankusa.com/filthycritic/recent-shit/593-you-ve-got-mail']
+    start_urls = ['http://www.millbankusa.com/filthycritic/recent-shit/202-deep-blue-sea']
 
     def relToAbs(self, urls, response):
         absUrls = []
@@ -35,9 +35,8 @@ class ArchiveSpider(scrapy.Spider):
 
         review = FilthyarchiveItem()
 
-        # title
-        title = response.css("h1.title::text").get()
-        review['title'] = title.replace("'",'&#39;')
+        # title. Keep original so can get matched up with blurb..
+        review['title'] = response.css("h1.title::text").get()
 
         # rating, genres, year, reviews by Jimmy
         keywords = response.css(".tags li")

@@ -65,9 +65,9 @@ ROBOTSTXT_OBEY = False
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   'filthyarchive.pipelines.FilthyarchivePipeline': 300,
-   'filthyarchive.pipelines.ImageNamePipeline': 100,
-   # 'scrapy.pipelines.images.ImagesPipeline': 1
+   'filthyarchive.pipelines.BlurbPipeline': 300,
+   # 'filthyarchive.pipelines.FilthyarchivePipeline': 300,
+   # 'filthyarchive.pipelines.ImageNamePipeline': 100,
 }
 
 IMAGES_STORE = 'ImgStore'

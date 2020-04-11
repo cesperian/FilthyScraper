@@ -8,6 +8,25 @@ from scrapy.pipelines.images import ImagesPipeline
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 
+class BlurbPipeline(object):
+
+    def __init__(self):
+        self.createConn()
+
+    def createConn(self):
+        self.conn = sqlite3.connect('filthy_archive.db')
+        self.cursor = self.conn.cursor()
+
+    def process_item(self, item, spider):
+        self.cursor.execute(
+            """update reviews set blurb = ? where title = ?""",
+            (
+                item['blurb'],
+                item['title']
+            )
+        )
+        self.conn.commit()
+        return item
 
 class FilthyarchivePipeline(object):
 
