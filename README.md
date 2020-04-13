@@ -13,7 +13,7 @@ Because his current one is just....awful.
 
 Many worse writers have much better sites, which is. Um. Also awful. 
 
-Pt 2; set up back end using RoR
+Pt 2; set up back end using Ruby on Rails
 
 Pt 3; set up front end using Angular
 
