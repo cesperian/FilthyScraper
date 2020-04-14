@@ -26,6 +26,7 @@ class BlurbPipeline(object):
             )
         )
         self.conn.commit()
+        self.conn.close()
         return item
 
 class FilthyarchivePipeline(object):
@@ -91,6 +92,7 @@ class FilthyarchivePipeline(object):
         #         )
 
         self.conn.commit()
+        self.conn.close()
         return item
 
 
