@@ -146,4 +146,4 @@ static
 # misc
 /*/test.json
 /*/ImgStore
-/*/filthy_archive.db
+#/*/filthy_archive.db
