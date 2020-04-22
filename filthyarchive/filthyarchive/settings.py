@@ -16,7 +16,7 @@ NEWSPIDER_MODULE = 'filthyarchive.spiders'
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = 'filthyarchive (+http://www.yourdomain.com)'
+# USER_AGENT = 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
@@ -52,9 +52,11 @@ ROBOTSTXT_OBEY = False
 
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
-#DOWNLOADER_MIDDLEWARES = {
-#    'filthyarchive.middlewares.FilthyarchiveDownloaderMiddleware': 543,
-#}
+DOWNLOADER_MIDDLEWARES = {
+   # 'filthyarchive.middlewares.FilthyarchiveDownloaderMiddleware': 543,
+   # 'scrapy.spidermiddlewares.referer.NoReferrerPolicy'
+   # 'scrapy.spidermiddlewares.referer.RefererMiddleware': None
+}
 
 # Enable or disable extensions
 # See https://docs.scrapy.org/en/latest/topics/extensions.html
@@ -65,9 +67,9 @@ ROBOTSTXT_OBEY = False
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   'filthyarchive.pipelines.BlurbPipeline': 300,
+   # 'filthyarchive.pipelines.BlurbPipeline': 300,
    # 'filthyarchive.pipelines.FilthyarchivePipeline': 300,
-   # 'filthyarchive.pipelines.ImageNamePipeline': 100,
+   'filthyarchive.pipelines.ImageNamePipeline': 100,
 }
 
 IMAGES_STORE = 'ImgStore'

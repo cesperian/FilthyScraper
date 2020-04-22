@@ -98,9 +98,12 @@ class FilthyarchivePipeline(object):
 
 
 class ImageNamePipeline(ImagesPipeline):
+    # 'image_name' per-image meta information different from 'image_names' item prop...
     def get_media_requests(self, item, info):
-        return [scrapy.Request(x, meta={'image_name': x.split('/')[-1]})
-                for x in item.get('image_urls', [])]
+        # return [scrapy.Request(x, meta={'image_name': x.split('/')[-1]})
+        #         for x in item.get('image_urls', [])]
+        return [scrapy.Request(url, meta={'image_name': name})
+                for url, name in zip(item.get('image_urls', []), item.get('image_names', []))]
 
     def file_path(self, request, response=None, info=None):
         return request.meta['image_name']

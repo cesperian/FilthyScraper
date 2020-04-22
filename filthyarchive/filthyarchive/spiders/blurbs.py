@@ -18,5 +18,5 @@ class BlurbsSpider(scrapy.Spider):
                 blurb = blurb.replace('\n','').strip()
                 blurbObj['title'] = ' '.join(title.split())
                 blurbObj['blurb'] = ' '.join(blurb.split())
-                # print(blurbObj)
-                yield blurbObj
+                print(blurbObj)
+                # yield blurbObj

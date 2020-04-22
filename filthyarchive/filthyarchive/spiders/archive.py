@@ -27,8 +27,7 @@ class ArchiveSpider(scrapy.Spider):
     def parse(self, response):
         targets = response.css("table.zebra td a::attr(href)").getall()
         if bool(targets): # if scraping >1 review..
-            # targets = targets[0:3]
-            # todo; change loop to 'follow_all()'
+            targets = targets[0:1]
             for target in targets:
                 yield response.follow(target, callback=self.parse)
             return

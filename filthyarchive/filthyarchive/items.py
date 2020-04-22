@@ -20,3 +20,20 @@ class FilthyarchiveItem(scrapy.Item):
     image_urls = scrapy.Field()
     images = scrapy.Field()
     image_names = scrapy.Field()
+
+class DetailsItem(scrapy.Item):
+    actors = scrapy.Field()
+    directors = scrapy.Field()
+    genres = scrapy.Field()
+    plot = scrapy.Field()
+    mpaa_rating = scrapy.Field()
+    duration = scrapy.Field()
+    release_date = scrapy.Field()
+    image_urls = scrapy.Field()
+    images = scrapy.Field()
+    image_names = scrapy.Field()
+
+class PosterImageItem(scrapy.Item):
+    image_urls = scrapy.Field()
+    images = scrapy.Field()
+    image_names = scrapy.Field()
