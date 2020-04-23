@@ -3,11 +3,6 @@ import scrapy
 import sqlite3
 from scrapy.pipelines.images import ImagesPipeline
 
-# Define your item pipelines here
-#
-# Don't forget to add your pipeline to the ITEM_PIPELINES setting
-# See: https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-
 class BlurbPipeline(object):
 
     def __init__(self):
@@ -28,6 +23,124 @@ class BlurbPipeline(object):
         self.conn.commit()
         self.conn.close()
         return item
+
+
+class DetailsPipeline(object):
+
+    def __init__(self):
+        self.createConn()
+
+    def createConn(self):
+        self.conn = sqlite3.connect('filthy_archive.db')
+        self.cursor = self.conn.cursor()
+
+    def process_item(self, item, spider):
+        # add actors...
+        for actor in item['actors']:
+            self.cursor.execute(
+                """
+                    insert into actors(actor)
+                    select ?
+                    where not exists(
+                        select 1 from actors where actor = ?
+                    );
+                """,
+                (
+                    actor,
+                    actor
+                )
+            )
+            self.cursor.execute(
+                """
+                    insert into movie_actors values(
+                        (select rowid from reviews WHERE title = ?),
+                        (select rowid from actors WHERE actor = ?)
+                    );
+                """,
+                (
+                    item['title'],
+                    actor
+                )
+            )
+        # end actors for:
+        for d in item['directors']:
+            self.cursor.execute(
+                """
+                    insert into directors(director)
+                    select ?
+                    where not exists(
+                        select 1 from directors where director = ?
+                    );
+                """,
+                (
+                    d,
+                    d
+                )
+            )
+            self.cursor.execute(
+                """
+                    insert into movie_directors values(
+                        (select rowid from reviews WHERE title = ?),
+                        (select rowid from directors WHERE director = ?)
+                    );
+                """,
+                (
+                    item['title'],
+                    d
+                )
+            )
+        # end directors for:
+        for g in item['genres']:
+            self.cursor.execute(
+                """
+                    insert into genres(genre)
+                    select ?
+                    where not exists(
+                        select 1 from genres where genre = ?
+                    );
+                """,
+                (
+                    g,
+                    g
+                )
+            )
+            self.cursor.execute(
+                """
+                    insert into movie_genres values(
+                        (select rowid from reviews WHERE title = ?),
+                        (select rowid from genres WHERE genre = ?)
+                    );
+                """,
+                (
+                    item['title'],
+                    g
+                )
+            )
+        # end genres for:
+
+        # update reviews w imdb details...
+        self.cursor.execute(
+            """
+                update reviews set
+                    plot = ?,
+                    mpaa_rating = ?,
+                    duration = ?,
+                    release_date = ?
+                WHERE title = ?;
+            """,
+            (
+                item['plot'],
+                item['mpaa_rating'],
+                item['duration'],
+                item['release_date'],
+                item['title']
+            )
+        )
+
+        self.conn.commit()
+        # self.conn.close()
+        return item
+
 
 class FilthyarchivePipeline(object):
 
@@ -54,17 +167,7 @@ class FilthyarchivePipeline(object):
                 genres
             )
         """)
-        # revisit this if setting up table rels..
-        # self.cursor.execute("""
-        #     create table genres(
-        #         genre text
-        #     )
-        # """)
-        # self.cursor.execute("""
-        #     create table images(
-        #         filename text
-        #     )
-        # """)
+
 
     def process_item(self, item, spider):
         self.cursor.execute(
@@ -79,18 +182,6 @@ class FilthyarchivePipeline(object):
                 ','.join(item['genres'])
             )
         )
-        # revisit this if setting up table rels..
-        # for g in item['genres']:
-        #     self.cursor.execute(
-        #         """insert into genres values (?)""", (g,)
-        #     )
-        #
-        # if item['image_names']:
-        #     for i in item['image_names']:
-        #         self.cursor.execute(
-        #             """insert into images values (?)""", (i,)
-        #         )
-
         self.conn.commit()
         self.conn.close()
         return item

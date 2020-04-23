@@ -22,6 +22,7 @@ class FilthyarchiveItem(scrapy.Item):
     image_names = scrapy.Field()
 
 class DetailsItem(scrapy.Item):
+    title = scrapy.Field()
     actors = scrapy.Field()
     directors = scrapy.Field()
     genres = scrapy.Field()

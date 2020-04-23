@@ -69,6 +69,7 @@ DOWNLOADER_MIDDLEWARES = {
 ITEM_PIPELINES = {
    # 'filthyarchive.pipelines.BlurbPipeline': 300,
    # 'filthyarchive.pipelines.FilthyarchivePipeline': 300,
+   'filthyarchive.pipelines.DetailsPipeline': 300,
    'filthyarchive.pipelines.ImageNamePipeline': 100,
 }
 
