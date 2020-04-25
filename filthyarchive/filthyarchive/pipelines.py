@@ -25,6 +25,53 @@ class BlurbPipeline(object):
         return item
 
 
+class ClearAssocPipeline(object):
+
+    def __init__(self):
+        self.createConn()
+
+    def createConn(self):
+        self.conn = sqlite3.connect('filthy_archive.db')
+        self.cursor = self.conn.cursor()
+
+    def process_item(self, item, spider):
+        if bool(item['plot']): # otherwise this will try to process PosterImageItem items also
+            self.cursor.execute(
+                """
+                    delete from movie_genres where movie_id = (
+                        SELECT rowid FROM reviews where title = ?
+                    )
+                """,
+                (
+                    item['title'],
+                )
+            )
+            self.cursor.execute(
+                """
+                    delete from movie_directors where movie_id = (
+                        SELECT rowid FROM reviews where title = ?
+                    )
+                """,
+                (
+                    item['title'],
+                )
+            )
+            self.cursor.execute(
+                """
+                    delete from movie_actors where movie_id = (
+                        SELECT rowid FROM reviews where title = ?
+                    )
+                """,
+                (
+                    item['title'],
+                )
+            )
+
+            self.conn.commit()
+            # self.conn.close()
+            return item
+
+
 class DetailsPipeline(object):
 
     def __init__(self):

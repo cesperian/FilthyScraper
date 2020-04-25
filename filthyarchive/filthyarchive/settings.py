@@ -70,6 +70,7 @@ ITEM_PIPELINES = {
    # 'filthyarchive.pipelines.BlurbPipeline': 300,
    # 'filthyarchive.pipelines.FilthyarchivePipeline': 300,
    'filthyarchive.pipelines.DetailsPipeline': 300,
+   'filthyarchive.pipelines.ClearAssocPipeline': 200,
    'filthyarchive.pipelines.ImageNamePipeline': 100,
 }
 
@@ -80,7 +81,7 @@ IMAGES_THUMBS = {
    # 'med': (260, 260),
 }
 
-# IMAGES_EXPIRES = 30 # Days. Default = 90
+IMAGES_EXPIRES = 0 # Days. Default = 90
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
