@@ -73,7 +73,8 @@ class PatchdbSpider(scrapy.Spider):
         f = open('patch_nullVals.json', 'r')
         titles = json.load(f)
         # print(titles[3:6])
-        for t in titles[6:len(titles)]: # 3=BNB
+        # for t in titles[6:len(titles)]: # 3=BNB
+        for t in titles:
             print('title = ' + t['title'])
             yield response.follow(
                 t["url"].rpartition('?')[0],
