@@ -21,7 +21,7 @@ Pt 3; set up front end using Angular
 An excellent writer, but the FC character is coarse. Proceed advised...
 http://www.millbankusa.com/filthycritic/
 
-##UPDATE;
+### UPDATE;
 My Netflix clone is complete, and can be currently viewed [here](https://ancient-basin-02315.herokuapp.com/). Please be aware that I am in the process of adding a 'sanitized' flag that replaces profanity with asterisks for the purpose of showcasing, but for now the content remains in its original filthy format, which is amusing but understandably not for everyone.
 Also in process is the switching to a NgRx store so data is persistant, and also dynamically loading content (just like Netflix).
 
