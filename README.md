@@ -26,4 +26,5 @@ My Netflix clone is complete, and can be currently viewed [here](https://ancient
 Also in process is the switching to a NgRx store so data is persistant, and also dynamically loading content (just like Netflix).
 
 That reminds me. Thanks, Netflix, for changing your UI, the same one that has remained mostly unchanged for a long time, right in the middle of my build. Thanks a bunch.
+
 My clone is in a private repo, but can be made available for code review purposes.
