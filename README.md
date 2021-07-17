@@ -23,7 +23,7 @@ Pt 5; Incorporate NgRx for persistant front end storage
 
 
 ### UPDATE;
-My Netflix clone is complete, and can be currently viewed [here](https://ancient-basin-02315.herokuapp.com/flt).
+My Netflix clone is complete, and can be currently viewed [here](https://thefilthycritic.herokuapp.com/flt).
 
 That reminds me. Thanks, Netflix, for changing your UI, the same one that has remained mostly unchanged for a long time, right in the middle of my build. Thanks a bunch.
 
